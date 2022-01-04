@@ -1,0 +1,35 @@
+<div>
+    @*the heading of the single category*@
+    <h1>@ViewBag.SingleCategory.Name</h1>
+    
+    @*list of all the products in the category*@
+    <div>
+        <h3>Products</h3>
+        @{
+            foreach (var producto in ViewBag.ProductsInCategory)
+            {
+                <p>@producto.Name</p>
+            }
+        }
+    </div>
+
+    @* add a product to this category *@
+    @model Association
+    <h3>Add Product</h3>
+    <form asp-action="AddProductToCategory" asp-controller="Home" method="post">
+        <span asp-validation-for="CategoryId"></span>
+        <input type="hidden" asp-for="CategoryId" value="@ViewBag.SingleCategory.CategoryId">
+
+        <span asp-validation-for="ProductId"></span>
+        <label for="ProductId">Products:</label>
+        <select name="ProductId" id="">
+            @{
+                foreach (var producto in ViewBag.productsUnrelated)
+                {
+                    <option value="@producto.ProductId">@producto.Name</option>
+                }
+            }
+        </select>
+        <button type="submit">Add</button>
+    </form>
+</div>
